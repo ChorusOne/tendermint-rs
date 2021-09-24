@@ -7,6 +7,7 @@ use std::fmt;
 use std::ops::{Add, Sub};
 use std::str::FromStr;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::convert::TryFrom;
 use tendermint_proto::google::protobuf::Timestamp;
 use tendermint_proto::serializers::timestamp;
 use tendermint_proto::Protobuf;
@@ -30,7 +31,7 @@ impl From<Timestamp> for Time {
             nanos: value.nanos,
         };
 
-        SystemTime::from(prost_value).into()
+        SystemTime::try_from(prost_value).unwrap().into()
     }
 }
 
